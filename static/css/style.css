@@ -1,0 +1,17 @@
+.header_menu {
+    background-color: #decd87;
+    color: #000000;
+    padding:25px;
+
+}
+.main_body {
+    background-color: #8ba7b4;
+    color: black;
+    padding: 20px;
+}
+
+.header_menu a{
+  /*Чтобы ничего не слиплось в меню*/
+  display:inline-block;
+  padding:5px;
+}

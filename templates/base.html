@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link type="text/css" href="{{ url_for('static', filename='css/style.css')}}" rel="stylesheet" />
+    <title>
+        {% block title %}
+        {% endblock %}</title>
+</head>
+
+<header>
+    <div class="header_menu">
+        <a href="{{ url_for('index') }}">ГЛАВНАЯ</a>
+        <a href="{{ url_for('change_obj') }}">ВЫБРАТЬ ОБЪЕКТ</a>
+        <a href="{{ url_for('new_obj') }}">НОВЫЙ ОБЪЕКТ</a>
+    </div>
+</header>
+
+<body>
+    <div class="main_body">
+        {% block body %}
+        {% endblock %}
+    </div>
+</body>
+</html>
