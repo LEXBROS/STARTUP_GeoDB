@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}
+    Выбрать объект
+{% endblock %}
+
+{% block body %}
+    Список объектов с ссылками на них<br>
+    <table class="orders_list">
+    <tr>
+        <th>id_заказа</th>
+        <th>Название заказа</th>
+        <th>id_Клиента</th>
+        <th>Регион заказа</th>
+        <th>Город</th>
+        <th>Адрес</th>
+        <th>Год выполнения</th>
+    </tr>
+    {% for el in orders_list %}
+        <tr>
+        <td>{{ el['order_id'] }}</td>
+        <td>{{ el['order_name'] }}</td>
+        <td>{{ el['client_id'] }}</td>
+        <td>{{ el['region'] }}</td>
+        <td>{{ el['order_city'] }}</td>
+        <td>{{ el['order_address'] }}</td>
+        <td>{{ el['order_year'] }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+{% endblock %}

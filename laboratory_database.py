@@ -33,6 +33,6 @@ class LaboratoryDatabase:
                               host=self._host,
                               port=self._port) as connection:
             cur = connection.cursor()
-            cur.execute("SELECT order_name FROM orders")
+            cur.execute("SELECT * FROM orders ORDER BY order_year DESC")
             result = cur.fetchall()
         return result
