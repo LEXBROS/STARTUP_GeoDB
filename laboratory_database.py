@@ -26,7 +26,7 @@ class LaboratoryDatabase:
             cur.execute(read_sql())
             connection.commit()
 
-    def get_all_objects(self):
+    def get_all_orders(self):
         with psycopg2.connect(database=self._db,
                               user=self._user,
                               password=self._password,
@@ -34,5 +34,16 @@ class LaboratoryDatabase:
                               port=self._port) as connection:
             cur = connection.cursor()
             cur.execute("SELECT * FROM orders ORDER BY order_year DESC")
-            result = cur.fetchall()
-        return result
+            all_orders = cur.fetchall()
+        return all_orders
+
+    def get_current_order(self, order_id):
+        with psycopg2.connect(database=self._db,
+                              user=self._user,
+                              password=self._password,
+                              host=self._host,
+                              port=self._port) as connection:
+            cur = connection.cursor()
+            cur.execute("SELECT * FROM probes WHERE order_id = %s", (order_id, ))
+            current_order = cur.fetchall()
+        return current_order

@@ -18,7 +18,7 @@
     {% for el in orders_list %}
         <tr>
         <td>{{ el['order_id'] }}</td>
-        <td>{{ el['order_name'] }}</td>
+        <td><a href="{{ url_for('current_order', order_id=el['order_id']) }}">{{ el['order_name'] }}</a></td>
         <td>{{ el['client_id'] }}</td>
         <td>{{ el['region'] }}</td>
         <td>{{ el['order_city'] }}</td>

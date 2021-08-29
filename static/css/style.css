@@ -34,3 +34,24 @@
     border: 1px solid black;
 }
 
+
+.probes_list {
+    background-color: #8ba7b4;
+    border: 1px solid black;
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    padding: 15px;
+}
+
+.probes_list th{
+    border: 1px solid black;
+    font-size: x-small;
+}
+
+
+.probes_list td{
+    border: 1px solid black;
+    font-size: x-small;
+}
+

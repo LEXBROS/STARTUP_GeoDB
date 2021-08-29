@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}
+    Текущий объект
+{% endblock %}
+
+{% block body %}
+    Список проб данного объекта<br>
+    <table class="probes_list">
+        <tr>
+            {% for tb_head in table_header.values() %}
+                <th>{{ tb_head }}</th>
+            {% endfor %}
+        </tr>
+        {% for probe in probes %}
+            <tr>
+                {% for column in probe.values() %}
+                    <td>{{ column }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
