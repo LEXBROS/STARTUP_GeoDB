@@ -37,7 +37,7 @@ class LaboratoryDatabase:
             all_orders = cur.fetchall()
         return all_orders
 
-    def get_current_order(self, order_id):
+    def get_all_order_probes(self, order_id):
         with psycopg2.connect(database=self._db,
                               user=self._user,
                               password=self._password,
@@ -45,5 +45,5 @@ class LaboratoryDatabase:
                               port=self._port) as connection:
             cur = connection.cursor()
             cur.execute("SELECT * FROM probes WHERE order_id = %s", (order_id, ))
-            current_order = cur.fetchall()
-        return current_order
+            all_probes_current_order = cur.fetchall()
+        return all_probes_current_order

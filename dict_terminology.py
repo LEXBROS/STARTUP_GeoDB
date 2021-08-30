@@ -1,4 +1,13 @@
-DT = {
+ORDERS = {'order_id': 'Номер заказа',
+          'order_name': 'Название объекта',
+          'client_id': 'Клиент id',
+          'region': 'Регион',
+          'order_city': 'Город',
+          'order_address': 'Адрес',
+          'order_year': 'Год начала выполнения'
+          }
+
+COLS_INGGEO = {
     'probe_id': '№ пробы',
     'order_id': '№ заказа',
     'executor_id': 'Лаборант',
@@ -30,4 +39,14 @@ DT = {
     'filtration': 'К-т фильтрации',
     'organic': 'Сод.орг.в-в',
     'uniformity_coefficient': 'К-т неоднородности гран.с-ва'
+}
+# НЕ ЗАКОНЧЕНО
+DT_PI_PESKI = {
+    'probe_id': '№ пробы',
+    'order_id': '№ заказа',
+    'executor_id': 'Лаборант',
+    'date_ready': 'Дата исп.',
+    'skv': '№ скв.',
+    'probe_depth': 'Глуб. отбора',
+    'soil_type': 'Тип грунта'
 }
