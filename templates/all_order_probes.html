@@ -4,14 +4,47 @@
 {% endblock %}
 
 {% block body %}
-    Список проб данного объекта<br>
+    Список проб данного объекта<br><br>
+    <h3>Инженерно-геологические исследования</h3>
     <table class="probes_list">
         <tr>
-            {% for tb_head in table_header.values() %}
+            {% for tb_head in table_ing_header.values() %}
                 <th>{{ tb_head }}</th>
             {% endfor %}
         </tr>
-        {% for probe in probes %}
+        {% for probe in ing_probes %}
+            <tr>
+                {% for column in probe.values() %}
+                    <td>{{ column }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+    <br>
+    <h3>Строительные пески</h3>
+    <table class="probes_list">
+        <tr>
+            {% for tb_head in table_construction_header.values() %}
+                <th>{{ tb_head }}</th>
+            {% endfor %}
+        </tr>
+        {% for probe in construction_sands %}
+            <tr>
+                {% for column in probe.values() %}
+                    <td>{{ column }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+    <br>
+    <h3>Кварцевые пески</h3>
+    <table class="probes_list">
+        <tr>
+            {% for tb_head in table_quartz_header.values() %}
+                <th>{{ tb_head }}</th>
+            {% endfor %}
+        </tr>
+        {% for probe in quartz_sands %}
             <tr>
                 {% for column in probe.values() %}
                     <td>{{ column }}</td>

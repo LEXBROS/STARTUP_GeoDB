@@ -2,7 +2,7 @@ from flask import Flask, render_template, url_for
 from config import Config
 from laboratory_database import LaboratoryDatabase
 from app_users_database import AppUsersDatabase
-from dict_terminology import COLS_INGGEO, ORDERS
+from dict_terminology import COLS_INGGEO, ORDERS, COLS_CONSTRUCTION_SAND, COLS_QUARTZ_SAND
 from forms import LoginForm
 
 app = Flask(__name__)
@@ -38,10 +38,18 @@ def change_order():
 
 @app.route('/all_order_probes/<int:order_id>')
 def all_order_probes(order_id):
-    probes = []
-    for row in laboratory_db.get_all_order_probes(int(order_id)):
-        probes.append(dict(zip(COLS_INGGEO.keys(), row)))
-    return render_template('all_order_probes.html', probes=probes, table_header=COLS_INGGEO)
+    ing_probes = []
+    construction_sands = []
+    quartz_sands = []
+    for row in laboratory_db.get_all_order_ing_probes(int(order_id)):
+        ing_probes.append(dict(zip(COLS_INGGEO.keys(), row)))
+    for row in laboratory_db.get_all_order_construction_sand(int(order_id)):
+        construction_sands.append(dict(zip(COLS_CONSTRUCTION_SAND.keys(), row)))
+    for row in laboratory_db.get_all_order_quartz_sand(int(order_id)):
+        quartz_sands.append(dict(zip(COLS_QUARTZ_SAND.keys(), row)))
+    return render_template('all_order_probes.html', ing_probes=ing_probes, table_ing_header=COLS_INGGEO,
+                           construction_sands=construction_sands, table_construction_header=COLS_CONSTRUCTION_SAND,
+                           quartz_sands=quartz_sands, table_quartz_header=COLS_QUARTZ_SAND)
 
 
 if __name__ == '__main__':

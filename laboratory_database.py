@@ -37,7 +37,7 @@ class LaboratoryDatabase:
             all_orders = cur.fetchall()
         return all_orders
 
-    def get_all_order_probes(self, order_id):
+    def get_all_order_ing_probes(self, order_id):
         with psycopg2.connect(database=self._db,
                               user=self._user,
                               password=self._password,
@@ -47,3 +47,25 @@ class LaboratoryDatabase:
             cur.execute("SELECT * FROM ing_probes WHERE order_id = %s", (order_id, ))
             all_probes_current_order = cur.fetchall()
         return all_probes_current_order
+
+    def get_all_order_quartz_sand(self, order_id):
+        with psycopg2.connect(database=self._db,
+                              user=self._user,
+                              password=self._password,
+                              host=self._host,
+                              port=self._port) as connection:
+            cur = connection.cursor()
+            cur.execute("SELECT * FROM quartz_sand WHERE order_id = %s", (order_id, ))
+            all_quartz_sand_current_order = cur.fetchall()
+        return all_quartz_sand_current_order
+
+    def get_all_order_construction_sand(self, order_id):
+        with psycopg2.connect(database=self._db,
+                              user=self._user,
+                              password=self._password,
+                              host=self._host,
+                              port=self._port) as connection:
+            cur = connection.cursor()
+            cur.execute("SELECT * FROM construction_sand WHERE order_id = %s", (order_id, ))
+            all_construction_sand_current_order = cur.fetchall()
+        return all_construction_sand_current_order

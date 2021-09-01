@@ -52,26 +52,26 @@ CREATE TABLE IF NOT EXISTS ing_probes
     plastic_limit          DECIMAL(5, 2) DEFAULT NULL,
     plasticity_index       DECIMAL(5, 2) DEFAULT NULL,
     liquidity_index        DECIMAL(4, 2) DEFAULT NULL,
-    sito10                 DECIMAL(5, 2) DEFAULT 0.00,
-    sito5                  DECIMAL(5, 2) DEFAULT 0.00,
-    sito2                  DECIMAL(5, 2) DEFAULT 0.00,
-    sito1                  DECIMAL(5, 2) DEFAULT 0.00,
-    sito0_5                DECIMAL(5, 2) DEFAULT 0.00,
-    sito0_25               DECIMAL(5, 2) DEFAULT 0.00,
-    sito0_1                DECIMAL(5, 2) DEFAULT 0.00,
-    sito0_05               DECIMAL(5, 2) DEFAULT 0.00,
-    sito0_01               DECIMAL(5, 2) DEFAULT 0.00,
-    sito0_002              DECIMAL(5, 2) DEFAULT 0.00,
-    sito_last              DECIMAL(5, 2) DEFAULT 0.00,
-    density                DECIMAL(4, 2) DEFAULT 0.00,
-    particle_density       DECIMAL(4, 2) DEFAULT 0.00,
-    dry_density            DECIMAL(4, 2) DEFAULT 0.00,
+    sito10                 DECIMAL(5, 2) DEFAULT NULL,
+    sito5                  DECIMAL(5, 2) DEFAULT NULL,
+    sito2                  DECIMAL(5, 2) DEFAULT NULL,
+    sito1                  DECIMAL(5, 2) DEFAULT NULL,
+    sito0_5                DECIMAL(5, 2) DEFAULT NULL,
+    sito0_25               DECIMAL(5, 2) DEFAULT NULL,
+    sito0_1                DECIMAL(5, 2) DEFAULT NULL,
+    sito0_05               DECIMAL(5, 2) DEFAULT NULL,
+    sito0_01               DECIMAL(5, 2) DEFAULT NULL,
+    sito0_002              DECIMAL(5, 2) DEFAULT NULL,
+    sito_last              DECIMAL(5, 2) DEFAULT NULL,
+    density                DECIMAL(4, 2) DEFAULT NULL,
+    particle_density       DECIMAL(4, 2) DEFAULT NULL,
+    dry_density            DECIMAL(4, 2) DEFAULT NULL,
     saturation_ratio       DECIMAL(3, 2) DEFAULT NULL,
     void_ratio             DECIMAL(3, 2) DEFAULT NULL,
     filtration             DECIMAL(5, 2) DEFAULT NULL,
     organic                DECIMAL(3, 2) DEFAULT NULL,
     uniformity_coefficient DECIMAL(4, 2) DEFAULT NULL,
-    UNIQUE (skv, probe_depth)
+    UNIQUE (order_id, skv, probe_num)
 );
 
 CREATE TABLE IF NOT EXISTS construction_sand
@@ -81,25 +81,26 @@ CREATE TABLE IF NOT EXISTS construction_sand
     executor_id            INTEGER REFERENCES executors (executor_id) NOT NULL,
     date_ready             DATE                                       NOT NULL,
     skv                    varchar(7)                                 NOT NULL,
-	probe_num              varchar(10)                                NOT NULL UNIQUE,
+	probe_num              varchar(10)                                NOT NULL,
     probe_up               DECIMAL(5, 2)                              NOT NULL,
 	probe_down             DECIMAL(5, 2)                              NOT NULL,
 	probe_length           DECIMAL(5, 2)                              NOT NULL,
 	soil_type              SMALLINT REFERENCES soil_types (soil_type) NOT NULL,     --3
-    sito10                 DECIMAL(5, 2) DEFAULT 0.00,
-    sito5                  DECIMAL(5, 2) DEFAULT 0.00,
-    sito2_5                DECIMAL(5, 2) DEFAULT 0.00,
-    sito1_25               DECIMAL(5, 2) DEFAULT 0.00,
-    sito0_63               DECIMAL(5, 2) DEFAULT 0.00,
-    sito0_315              DECIMAL(5, 2) DEFAULT 0.00,
-    sito0_16               DECIMAL(5, 2) DEFAULT 0.00,
-    sito_last              DECIMAL(5, 2) DEFAULT 0.00,
-	dust                   DECIMAL(5, 2) DEFAULT 0.00,
+    sito10                 DECIMAL(5, 2) DEFAULT NULL,
+    sito5                  DECIMAL(5, 2) DEFAULT NULL,
+    sito2_5                DECIMAL(5, 2) DEFAULT NULL,
+    sito1_25               DECIMAL(5, 2) DEFAULT NULL,
+    sito0_63               DECIMAL(5, 2) DEFAULT NULL,
+    sito0_315              DECIMAL(5, 2) DEFAULT NULL,
+    sito0_16               DECIMAL(5, 2) DEFAULT NULL,
+    sito_last              DECIMAL(5, 2) DEFAULT NULL,
+	dust                   DECIMAL(5, 2) DEFAULT NULL,
     s_filtration           DECIMAL(5, 2) DEFAULT NULL,
-    size_module            DECIMAL(3, 2) NOT NULL,
-    bulk_density           DECIMAL(4, 2) NOT NULL,
+    size_module            DECIMAL(3, 2) DEFAULT NULL,
+    bulk_density           DECIMAL(4, 2) DEFAULT NULL,
 	otkos_s				   INTEGER DEFAULT NULL,
-	otkos_w				   INTEGER DEFAULT NULL
+	otkos_w				   INTEGER DEFAULT NULL,
+	UNIQUE (order_id, skv, probe_num)
 );
 
 CREATE TABLE IF NOT EXISTS quartz_sand
@@ -109,25 +110,25 @@ CREATE TABLE IF NOT EXISTS quartz_sand
     executor_id            INTEGER REFERENCES executors (executor_id) NOT NULL,
     date_ready             DATE                                       NOT NULL,
     skv                    varchar(7)                                 NOT NULL,
-	probe_num              varchar(10)                                NOT NULL UNIQUE,
+	probe_num              varchar(10)                                NOT NULL,
     probe_up               DECIMAL(5, 2)                              NOT NULL,
 	probe_down             DECIMAL(5, 2)                              NOT NULL,
 	probe_length           DECIMAL(5, 2)                              NOT NULL,
 	soil_type              SMALLINT REFERENCES soil_types (soil_type) NOT NULL,     --3
-    sito2_5                DECIMAL(5, 2) DEFAULT 0.00,
-    sito1_6                DECIMAL(5, 2) DEFAULT 0.00,
-    sito1                  DECIMAL(5, 2) DEFAULT 0.00,
-    sito0_8                DECIMAL(5, 2) DEFAULT 0.00,
-    sito0_63               DECIMAL(5, 2) DEFAULT 0.00,
-	sito0_4                DECIMAL(5, 2) DEFAULT 0.00,
-    sito0_315              DECIMAL(5, 2) DEFAULT 0.00,
-	sito0_2                DECIMAL(5, 2) DEFAULT 0.00,
-    sito0_16               DECIMAL(5, 2) DEFAULT 0.00,
-	sito0_1                DECIMAL(5, 2) DEFAULT 0.00,
-	sito0_063              DECIMAL(5, 2) DEFAULT 0.00,
-	sito0_05               DECIMAL(5, 2) DEFAULT 0.00,
-    sito_last              DECIMAL(5, 2) DEFAULT 0.00,
-	clay                   DECIMAL(5, 2) DEFAULT 0.00,
+    sito2_5                DECIMAL(5, 2) DEFAULT NULL,
+    sito1_6                DECIMAL(5, 2) DEFAULT NULL,
+    sito1                  DECIMAL(5, 2) DEFAULT NULL,
+    sito0_8                DECIMAL(5, 2) DEFAULT NULL,
+    sito0_63               DECIMAL(5, 2) DEFAULT NULL,
+	sito0_4                DECIMAL(5, 2) DEFAULT NULL,
+    sito0_315              DECIMAL(5, 2) DEFAULT NULL,
+	sito0_2                DECIMAL(5, 2) DEFAULT NULL,
+    sito0_16               DECIMAL(5, 2) DEFAULT NULL,
+	sito0_1                DECIMAL(5, 2) DEFAULT NULL,
+	sito0_063              DECIMAL(5, 2) DEFAULT NULL,
+	sito0_05               DECIMAL(5, 2) DEFAULT NULL,
+    sito_last              DECIMAL(5, 2) DEFAULT NULL,
+	clay                   DECIMAL(5, 2) DEFAULT NULL,
     w                      DECIMAL(5, 2) DEFAULT NULL,
 	limit_strength         DECIMAL(5, 2) DEFAULT NULL,
 	pH                     DECIMAL(5, 2) DEFAULT NULL,
@@ -145,8 +146,8 @@ CREATE TABLE IF NOT EXISTS quartz_sand
 	avg_size               DECIMAL(5, 2) DEFAULT NULL,
 	gazopr                 DECIMAL(6, 2) DEFAULT NULL,
 	mark_f                 varchar(10)   DEFAULT NULL,
-	mark_g                 varchar(10)   DEFAULT NULL
-    
+	mark_g                 varchar(10)   DEFAULT NULL,
+    UNIQUE (order_id, skv, probe_num)
 );
 
 INSERT INTO regions (region, region_title)
@@ -300,4 +301,38 @@ VALUES
 (1, 3, '2021-12-13', 'Скв.1','2-1', 2.00, 2),
 (3, 1, '2021-12-13', 'Скв.3','2-1', 3.00, 1),
 (1, 5, '2021-12-13', 'Скв.7','2-1', 5.00, 1)
+ON CONFLICT DO NOTHING;
+
+INSERT INTO quartz_sand (order_id, executor_id, date_ready, skv, probe_num, probe_up, probe_down, probe_length, soil_type)
+VALUES
+(1, 1, '2021-12-13', 'Скв.1','1-1', 2.00, 3.00, 1.00, 4),
+(2, 1, '2021-12-13', 'Скв.12','12-1', 2.00, 3.00, 1.00, 4),
+(3, 5, '2021-12-13', 'Скв.12','12-2', 2.00, 3.00, 1.00, 4),
+(4, 3, '2021-12-13', 'Скв.14','14-1', 2.00, 3.00, 1.00, 4),
+(1, 1, '2021-12-13', 'Скв.6','6-1', 2.00, 3.00, 1.00, 4),
+(2, 4, '2021-12-13', 'Скв.8','8-1', 2.00, 3.00, 1.00, 4),
+(3, 1, '2021-12-13', 'Скв.9','9-1', 2.00, 3.00, 1.00, 4),
+(4, 2, '2021-12-13', 'Скв.10','10-1', 2.00, 3.00, 1.00, 4),
+(5, 1, '2021-12-13', 'Скв.12','12-3', 2.00, 3.00, 1.00, 4),
+(6, 2, '2021-12-13', 'Скв.13','13-1', 2.00, 3.00, 1.00, 4),
+(1, 3, '2021-12-13', 'Скв.1','1-2', 2.00, 3.00, 1.00, 4),
+(3, 1, '2021-12-13', 'Скв.3','3-1', 3.00, 4.00, 1.00, 4),
+(1, 5, '2021-12-13', 'Скв.7','7-1', 5.00, 6.00, 1.00, 4)
+ON CONFLICT DO NOTHING;
+
+INSERT INTO construction_sand (order_id, executor_id, date_ready, skv, probe_num, probe_up, probe_down, probe_length, soil_type)
+VALUES
+(1, 1, '2021-12-13', 'Скв.1','1-1', 2.00, 3.00, 1.00, 4),
+(2, 1, '2021-12-13', 'Скв.12','12-1', 2.00, 3.00, 1.00, 4),
+(3, 5, '2021-12-13', 'Скв.12','12-2', 2.00, 3.00, 1.00, 4),
+(4, 3, '2021-12-13', 'Скв.14','14-1', 2.00, 3.00, 1.00, 4),
+(1, 1, '2021-12-13', 'Скв.6','6-1', 2.00, 3.00, 1.00, 4),
+(2, 4, '2021-12-13', 'Скв.8','8-1', 2.00, 3.00, 1.00, 4),
+(3, 1, '2021-12-13', 'Скв.9','9-1', 2.00, 3.00, 1.00, 4),
+(4, 2, '2021-12-13', 'Скв.10','10-1', 2.00, 3.00, 1.00, 4),
+(5, 1, '2021-12-13', 'Скв.12','12-3', 2.00, 3.00, 1.00, 4),
+(6, 2, '2021-12-13', 'Скв.13','13-1', 2.00, 3.00, 1.00, 4),
+(1, 3, '2021-12-13', 'Скв.1','1-2', 2.00, 3.00, 1.00, 4),
+(3, 1, '2021-12-13', 'Скв.3','3-1', 3.00, 4.00, 1.00, 4),
+(1, 5, '2021-12-13', 'Скв.7','7-1', 5.00, 6.00, 1.00, 4)
 ON CONFLICT DO NOTHING;
