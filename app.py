@@ -1,9 +1,11 @@
 from flask import Flask, render_template, url_for
+from config import Config
 from laboratory_database import LaboratoryDatabase
 from app_users_database import AppUsersDatabase
 from dict_terminology import COLS_INGGEO, ORDERS
 
 app = Flask(__name__)
+app.config.from_object(Config)
 laboratory_db = LaboratoryDatabase()
 users_db = AppUsersDatabase()
 

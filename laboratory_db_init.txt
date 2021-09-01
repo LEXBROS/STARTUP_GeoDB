@@ -1,0 +1,245 @@
+CREATE TABLE IF NOT EXISTS regions
+(
+    region SMALLINT NOT NULL UNIQUE PRIMARY KEY,
+    region_title varchar(50) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS clients
+(
+    client_id      SERIAL PRIMARY KEY,
+    client_name    varchar(100) UNIQUE NOT NULL,
+    client_address varchar(100) UNIQUE DEFAULT NULL,
+    client_phone   varchar(15) UNIQUE  DEFAULT NULL,
+    client_email   varchar(100) UNIQUE DEFAULT NULL,
+    client_site    varchar(30) UNIQUE  DEFAULT NULL
+);
+
+CREATE TABLE IF NOT EXISTS orders
+(
+    order_id      SERIAL PRIMARY KEY,
+    order_name    VARCHAR(200) NOT NULL,
+    client_id     INTEGER REFERENCES clients (client_id),
+    region        SMALLINT REFERENCES regions (region),
+    order_city    VARCHAR(50),
+    order_address VARCHAR(100),
+    order_year SMALLINT
+);
+
+CREATE TABLE IF NOT EXISTS executors
+(
+    executor_id  SERIAL PRIMARY KEY,
+    executor_FIO varchar(40) UNIQUE NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS soil_types
+(
+    soil_type  SMALLINT PRIMARY KEY,
+    soil_title varchar(30) UNIQUE NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS ing_probes
+(
+    probe_id               SERIAL PRIMARY KEY,
+    order_id               INTEGER REFERENCES orders (order_id)       NOT NULL,
+    executor_id            INTEGER REFERENCES executors (executor_id) NOT NULL,
+    date_ready             DATE                                       NOT NULL,
+    skv                    varchar(7)                                 NOT NULL,
+    probe_depth            DECIMAL(5, 2)                              NOT NULL,
+    soil_type              SMALLINT REFERENCES soil_types (soil_type) NOT NULL,  --1 или 2
+    water_content          DECIMAL(5, 2) DEFAULT NULL,
+    liquid_limit           DECIMAL(5, 2) DEFAULT NULL,
+    plastic_limit          DECIMAL(5, 2) DEFAULT NULL,
+    plasticity_index       DECIMAL(5, 2) DEFAULT NULL,
+    liquidity_index        DECIMAL(4, 2) DEFAULT NULL,
+    sito10                 DECIMAL(5, 2) DEFAULT 0.00,
+    sito5                  DECIMAL(5, 2) DEFAULT 0.00,
+    sito2                  DECIMAL(5, 2) DEFAULT 0.00,
+    sito1                  DECIMAL(5, 2) DEFAULT 0.00,
+    sito0_5                DECIMAL(5, 2) DEFAULT 0.00,
+    sito0_25               DECIMAL(5, 2) DEFAULT 0.00,
+    sito0_1                DECIMAL(5, 2) DEFAULT 0.00,
+    sito0_05               DECIMAL(5, 2) DEFAULT 0.00,
+    sito0_01               DECIMAL(5, 2) DEFAULT 0.00,
+    sito0_002              DECIMAL(5, 2) DEFAULT 0.00,
+    sito_last              DECIMAL(5, 2) DEFAULT 0.00,
+    density                DECIMAL(4, 2)                              NOT NULL,
+    particle_density       DECIMAL(4, 2)                              NOT NULL,
+    dry_density            DECIMAL(4, 2)                              NOT NULL,
+    saturation_ratio       DECIMAL(3, 2) DEFAULT NULL,
+    void_ratio             DECIMAL(3, 2) DEFAULT NULL,
+    filtration             DECIMAL(5, 2) DEFAULT NULL,
+    organic                DECIMAL(3, 2) DEFAULT NULL,
+    uniformity_coefficient DECIMAL(4, 2) DEFAULT NULL
+);
+
+CREATE TABLE IF NOT EXISTS construction_sand
+(
+    probe_id               SERIAL PRIMARY KEY,
+    order_id               INTEGER REFERENCES orders (order_id)       NOT NULL,
+    executor_id            INTEGER REFERENCES executors (executor_id) NOT NULL,
+    date_ready             DATE                                       NOT NULL,
+    skv                    varchar(7)                                 NOT NULL,
+	probe_num              varchar(10)                                NOT NULL UNIQUE,
+    probe_up               DECIMAL(5, 2)                              NOT NULL,
+	probe_down             DECIMAL(5, 2)                              NOT NULL,
+	probe_length           DECIMAL(5, 2)                              NOT NULL,
+	soil_type              SMALLINT REFERENCES soil_types (soil_type) NOT NULL,     --3
+    sito10                 DECIMAL(5, 2) DEFAULT 0.00,
+    sito5                  DECIMAL(5, 2) DEFAULT 0.00,
+    sito2_5                DECIMAL(5, 2) DEFAULT 0.00,
+    sito1_25               DECIMAL(5, 2) DEFAULT 0.00,
+    sito0_63               DECIMAL(5, 2) DEFAULT 0.00,
+    sito0_315              DECIMAL(5, 2) DEFAULT 0.00,
+    sito0_16               DECIMAL(5, 2) DEFAULT 0.00,
+    sito_last              DECIMAL(5, 2) DEFAULT 0.00,
+	dust                   DECIMAL(5, 2) DEFAULT 0.00,
+    s_filtration           DECIMAL(5, 2) DEFAULT NULL,
+    size_module            DECIMAL(3, 2) NOT NULL,
+    bulk_density           DECIMAL(4, 2) NOT NULL,
+	otkos_s				   INTEGER DEFAULT NULL,
+	otkos_w				   INTEGER DEFAULT NULL
+);
+
+CREATE TABLE IF NOT EXISTS quartz_sand
+(
+    probe_id               SERIAL PRIMARY KEY,
+    order_id               INTEGER REFERENCES orders (order_id)       NOT NULL,
+    executor_id            INTEGER REFERENCES executors (executor_id) NOT NULL,
+    date_ready             DATE                                       NOT NULL,
+    skv                    varchar(7)                                 NOT NULL,
+	probe_num              varchar(10)                                NOT NULL UNIQUE,
+    probe_up               DECIMAL(5, 2)                              NOT NULL,
+	probe_down             DECIMAL(5, 2)                              NOT NULL,
+	probe_length           DECIMAL(5, 2)                              NOT NULL,
+	soil_type              SMALLINT REFERENCES soil_types (soil_type) NOT NULL,     --3
+    sito2_5                DECIMAL(5, 2) DEFAULT 0.00,
+    sito1_6                DECIMAL(5, 2) DEFAULT 0.00,
+    sito1                  DECIMAL(5, 2) DEFAULT 0.00,
+    sito0_8                DECIMAL(5, 2) DEFAULT 0.00,
+    sito0_63               DECIMAL(5, 2) DEFAULT 0.00,
+	sito0_4                DECIMAL(5, 2) DEFAULT 0.00,
+    sito0_315              DECIMAL(5, 2) DEFAULT 0.00,
+	sito0_2                DECIMAL(5, 2) DEFAULT 0.00,
+    sito0_16               DECIMAL(5, 2) DEFAULT 0.00,
+	sito0_1                DECIMAL(5, 2) DEFAULT 0.00,
+	sito0_063              DECIMAL(5, 2) DEFAULT 0.00,
+	sito0_05               DECIMAL(5, 2) DEFAULT 0.00,
+    sito_last              DECIMAL(5, 2) DEFAULT 0.00,
+	clay                   DECIMAL(5, 2) DEFAULT 0.00,
+    w                      DECIMAL(5, 2) DEFAULT NULL,
+	limit_strength         DECIMAL(5, 2) DEFAULT NULL,
+	pH                     DECIMAL(5, 2) DEFAULT NULL,
+	sio2                   DECIMAL(5, 2) DEFAULT NULL,
+	tio2                   DECIMAL(5, 2) DEFAULT NULL,
+	al2o3                  DECIMAL(5, 2) DEFAULT NULL,
+	fe2o3                  DECIMAL(5, 2) DEFAULT NULL,
+	mno                    DECIMAL(5, 2) DEFAULT NULL,
+	na2o                   DECIMAL(5, 2) DEFAULT NULL,
+	k2o                    DECIMAL(5, 2) DEFAULT NULL,
+	p2o5                   DECIMAL(5, 2) DEFAULT NULL,
+	so3sulf                DECIMAL(5, 2) DEFAULT NULL,
+	ppp                    DECIMAL(5, 2) DEFAULT NULL,
+	uniformity_coefficient DECIMAL(5, 2) DEFAULT NULL,
+	avg_size               DECIMAL(5, 2) DEFAULT NULL,
+	gazopr                 DECIMAL(6, 2) DEFAULT NULL,
+	mark_f                 varchar(10)   DEFAULT NULL,
+	mark_g                 varchar(10)   DEFAULT NULL
+    
+);
+
+INSERT INTO regions (region, region_title)
+VALUES (1, 'Республика Адыгея'),
+       (2, 'Республика Башкортостан'),
+       (3, 'Республика Бурятия'),
+       (4, 'Республика Алтай'),
+       (5, 'Республика Дагестан'),
+       (6, 'Республика Ингушетия'),
+       (7, 'Кабардино-Балкарская Республика'),
+       (8, 'Республика Калмыкия'),
+       (9, 'Карачаево-Черкесская Республика'),
+       (10, 'Республика Карелия'),
+       (11, 'Республика Коми'),
+       (12, 'Республика Марий Эл'),
+       (13, 'Республика Мордовия'),
+       (14, 'Республика Саха - Якутия'),
+       (15, 'Республика Северная Осетия - Алания'),
+       (16, 'Республика Татарстан'),
+       (17, 'Республика Тыва'),
+       (18, 'Удмуртская Республика'),
+       (19, 'Республика Хакасия'),
+       (20, 'Чеченская Республика'),
+       (21, 'Чувашская Республика - Чувашия'),
+       (22, 'Алтайский край'),
+       (23, 'Краснодарский край'),
+       (24, 'Красноярский край'),
+       (25, 'Приморский край'),
+       (26, 'Ставропольский край'),
+       (27, 'Хабаровский край'),
+       (28, 'Амурская область'),
+       (29, 'Архангельская область'),
+       (30, 'Астраханская область'),
+       (31, 'Белгородская область'),
+       (32, 'Брянская область'),
+       (33, 'Владимирская область'),
+       (34, 'Волгоградская область'),
+       (35, 'Вологодская область'),
+       (36, 'Воронежская область'),
+       (37, 'Ивановская область'),
+       (38, 'Иркутская область'),
+       (39, 'Калининградская область'),
+       (40, 'Калужская область'),
+       (41, 'Камчатский край'),
+       (42, 'Кемеровская область - Кузбасс'),
+       (43, 'Кировская область'),
+       (44, 'Костромская область'),
+       (45, 'Курганская область'),
+       (46, 'Курская область'),
+       (47, 'Ленинградская область'),
+       (48, 'Липецкая область'),
+       (49, 'Магаданская область'),
+       (50, 'Московская область'),
+       (51, 'Мурманская область'),
+       (52, 'Нижегородская область'),
+       (53, 'Новгородская область'),
+       (54, 'Новосибирская область'),
+       (55, 'Омская область'),
+       (56, 'Оренбургская область'),
+       (57, 'Орловская область'),
+       (58, 'Пензенская область'),
+       (59, 'Пермский край'),
+       (60, 'Псковская область'),
+       (61, 'Ростовская область'),
+       (62, 'Рязанская область'),
+       (63, 'Самарская область'),
+       (64, 'Саратовская область'),
+       (65, 'Сахалинская область'),
+       (66, 'Свердловская область'),
+       (67, 'Смоленская область'),
+       (68, 'Тамбовская область'),
+       (69, 'Тверская область'),
+       (70, 'Томская область'),
+       (71, 'Тульская область'),
+       (72, 'Тюменская область'),
+       (73, 'Ульяновская область'),
+       (74, 'Челябинская область'),
+       (75, 'Забайкальский край'),
+       (76, 'Ярославская область'),
+       (77, 'г. Москва'),
+       (78, 'г. Санкт-Петербург'),
+       (79, 'Еврейская автономная область'),
+       (83, 'Ненецкий автономный округ'),
+       (86, 'Ханты-Мансийский автономный округ - Югра'),
+       (87, 'Чукотский автономный округ'),
+       (89, 'Ямало-Ненецкий автономный округ'),
+       (91, 'Республика Крым'),
+       (92, 'г. Севастополь')
+ON CONFLICT DO NOTHING
+;
+
+INSERT INTO soil_types (soil_type, soil_title)
+VALUES (1, 'песчаный грунт'),
+       (2, 'глинистый грунт'),
+	   (3, 'строительный песок'),
+	   (4, 'кварцевый песок')
+ON CONFLICT DO NOTHING
+;
