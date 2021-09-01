@@ -3,11 +3,18 @@ from config import Config
 from laboratory_database import LaboratoryDatabase
 from app_users_database import AppUsersDatabase
 from dict_terminology import COLS_INGGEO, ORDERS
+from forms import LoginForm
 
 app = Flask(__name__)
 app.config.from_object(Config)
 laboratory_db = LaboratoryDatabase()
 users_db = AppUsersDatabase()
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    return render_template('login.html', form=form)
 
 
 @app.route('/')

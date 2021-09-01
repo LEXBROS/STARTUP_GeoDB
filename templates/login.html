@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LogIn</title>
+</head>
+<body>
+<form action="" method="post" class="form-login">
+    {{ form.hidden_tag() }}
+    {{ form.login.label() }} {{ form.login() }} <br>
+    {{ form.password.label() }} {{ form.password() }} <br>
+    {{ form.remember.label() }} {{ form.remember() }} <br>
+    {{ form.submit_btn() }}
+</form>
+</body>
+</html>
