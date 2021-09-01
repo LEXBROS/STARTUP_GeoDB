@@ -16,7 +16,7 @@ ORDERS = {
 }
 
 COLS_INGGEO = {
-    'probe_id': '№ пробы',
+    'probe_id': 'id пробы',
     'order_id': '№ заказа',
     'executor_id': 'Лаборант',
     'date_ready': 'Дата исп.',

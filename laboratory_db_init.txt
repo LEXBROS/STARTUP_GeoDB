@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS clients
 CREATE TABLE IF NOT EXISTS orders
 (
     order_id      SERIAL PRIMARY KEY,
-    order_name    VARCHAR(200) NOT NULL,
+    order_name    VARCHAR(200) NOT NULL UNIQUE,
     client_id     INTEGER REFERENCES clients (client_id),
     region        SMALLINT REFERENCES regions (region),
     order_city    VARCHAR(50),
@@ -44,6 +44,7 @@ CREATE TABLE IF NOT EXISTS ing_probes
     executor_id            INTEGER REFERENCES executors (executor_id) NOT NULL,
     date_ready             DATE                                       NOT NULL,
     skv                    varchar(7)                                 NOT NULL,
+    probe_num              varchar(5)                             DEFAULT NULL,
     probe_depth            DECIMAL(5, 2)                              NOT NULL,
     soil_type              SMALLINT REFERENCES soil_types (soil_type) NOT NULL,  --1 или 2
     water_content          DECIMAL(5, 2) DEFAULT NULL,
@@ -62,14 +63,15 @@ CREATE TABLE IF NOT EXISTS ing_probes
     sito0_01               DECIMAL(5, 2) DEFAULT 0.00,
     sito0_002              DECIMAL(5, 2) DEFAULT 0.00,
     sito_last              DECIMAL(5, 2) DEFAULT 0.00,
-    density                DECIMAL(4, 2)                              NOT NULL,
-    particle_density       DECIMAL(4, 2)                              NOT NULL,
-    dry_density            DECIMAL(4, 2)                              NOT NULL,
+    density                DECIMAL(4, 2) DEFAULT 0.00,
+    particle_density       DECIMAL(4, 2) DEFAULT 0.00,
+    dry_density            DECIMAL(4, 2) DEFAULT 0.00,
     saturation_ratio       DECIMAL(3, 2) DEFAULT NULL,
     void_ratio             DECIMAL(3, 2) DEFAULT NULL,
     filtration             DECIMAL(5, 2) DEFAULT NULL,
     organic                DECIMAL(3, 2) DEFAULT NULL,
-    uniformity_coefficient DECIMAL(4, 2) DEFAULT NULL
+    uniformity_coefficient DECIMAL(4, 2) DEFAULT NULL,
+    UNIQUE (skv, probe_depth)
 );
 
 CREATE TABLE IF NOT EXISTS construction_sand
@@ -243,3 +245,59 @@ VALUES (1, 'песчаный грунт'),
 	   (4, 'кварцевый песок')
 ON CONFLICT DO NOTHING
 ;
+
+INSERT INTO clients (client_name, client_address, client_phone, client_email, client_site)
+VALUES
+('ООО №1', 'Адрес клиента №1', 'Телефон№1', 'client1@mail.ru', 'client_site1.ru'),
+('ООО №2', 'Адрес клиента №2', 'Телефон№2', 'client2@mail.ru', 'client_site2.ru'),
+('ООО №3', 'Адрес клиента №3', 'Телефон№3', 'client3@mail.ru', 'client_site3.ru'),
+('ООО №4', 'Адрес клиента №4', 'Телефон№4', 'client4@mail.ru', 'client_site4.ru'),
+('ООО №5', 'Адрес клиента №5', 'Телефон№5', 'client5@mail.ru', 'client_site5.ru'),
+('ООО №6', 'Адрес клиента №6', 'Телефон№6', 'client6@mail.ru', 'client_site6.ru'),
+('ООО №7', 'Адрес клиента №7', 'Телефон№7', 'client7@mail.ru', 'client_site7.ru'),
+('ООО №8', 'Адрес клиента №8', 'Телефон№8', 'client8@mail.ru', 'client_site8.ru'),
+('ООО №9', 'Адрес клиента №9', 'Телефон№9', 'client9@mail.ru', 'client_site9.ru'),
+('ООО №10', 'Адрес клиента №10', 'Телефон№10', 'client10@mail.ru', 'client_site10.ru'),
+('ООО №11', 'Адрес клиента №11', 'Телефон№11', 'client11@mail.ru', 'client_site11.ru'),
+('ООО №12', 'Адрес клиента №12', 'Телефон№12', 'client12@mail.ru', 'client_site12.ru')
+ON CONFLICT DO NOTHING
+;
+
+INSERT INTO executors (executor_fio)
+VALUES
+('Иванов Иван Иванович'),
+('Петров Иван Иванович'),
+('Сидоров Иван Иванович'),
+('Лазутчиков Иван Иванович'),
+('Семенов Семен Семенович')
+ON CONFLICT DO NOTHING
+;
+
+INSERT INTO orders (order_name, client_id, region, order_city, order_address, order_year)
+VALUES
+('Заказ №1', 1, 11, 'Город объекта №1', 'Адрес объекта №1', 2012),
+('Заказ №2', 11, 50, 'Город объекта №2', 'Адрес объекта №2', 2012),
+('Заказ №3', 8, 13, 'Город объекта №3', 'Адрес объекта №3', 2012),
+('Заказ №4', 9, 71, 'Город объекта №4', 'Адрес объекта №4', 2012),
+('Заказ №5', 1, 01, 'Город объекта №5', 'Адрес объекта №5', 2012),
+('Заказ №6', 1, 77, 'Город объекта №6', 'Адрес объекта №6', 2012),
+('Заказ №7', 2, 50, 'Город объекта №7', 'Адрес объекта №7', 2012),
+('Заказ №8', 2, 53, 'Город объекта №8', 'Адрес объекта №8', 2012)
+ON CONFLICT DO NOTHING;
+
+INSERT INTO ing_probes (order_id, executor_id, date_ready, skv, probe_num, probe_depth, soil_type)
+VALUES
+(1, 1, '2021-12-13', 'Скв.1','2-1', 2.00, 1),
+(2, 1, '2021-12-13', 'Скв.12','2-1', 2.00, 2),
+(3, 5, '2021-12-13', 'Скв.12','2-1', 2.00, 1),
+(4, 3, '2021-12-13', 'Скв.14','2-1', 2.00, 1),
+(1, 1, '2021-12-13', 'Скв.6','2-1', 2.00, 2),
+(2, 4, '2021-12-13', 'Скв.8','2-1', 2.00, 1),
+(3, 1, '2021-12-13', 'Скв.9','2-1', 2.00, 2),
+(4, 2, '2021-12-13', 'Скв.10','2-1', 2.00, 1),
+(5, 1, '2021-12-13', 'Скв.12','2-1', 2.00, 2),
+(6, 2, '2021-12-13', 'Скв.13','2-1', 2.00, 1),
+(1, 3, '2021-12-13', 'Скв.1','2-1', 2.00, 2),
+(3, 1, '2021-12-13', 'Скв.3','2-1', 3.00, 1),
+(1, 5, '2021-12-13', 'Скв.7','2-1', 5.00, 1)
+ON CONFLICT DO NOTHING;

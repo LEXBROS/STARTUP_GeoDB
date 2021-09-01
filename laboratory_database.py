@@ -44,6 +44,6 @@ class LaboratoryDatabase:
                               host=self._host,
                               port=self._port) as connection:
             cur = connection.cursor()
-            cur.execute("SELECT * FROM probes WHERE order_id = %s", (order_id, ))
+            cur.execute("SELECT * FROM ing_probes WHERE order_id = %s", (order_id, ))
             all_probes_current_order = cur.fetchall()
         return all_probes_current_order
