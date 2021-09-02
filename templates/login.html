@@ -1,16 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>LogIn</title>
-</head>
-<body>
-<form action="" method="post" class="form-login">
-    {{ form.hidden_tag() }}
-    {{ form.login.label() }} {{ form.login() }} <br>
-    {{ form.password.label() }} {{ form.password() }} <br>
-    {{ form.remember.label() }} {{ form.remember() }} <br>
-    {{ form.submit_btn() }}
-</form>
-</body>
-</html>
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title>LogIn</title>#}
+{#</head>#}
+{#<body>#}
+{#<form action="" method="post" class="form-login">#}
+{#    {{ form.hidden_tag() }}#}
+{#    {{ form.login.label() }} {{ form.login() }} <br>#}
+{#    {{ form.password.label() }} {{ form.password() }} <br>#}
+{#    {{ form.remember.label() }} {{ form.remember() }} <br>#}
+{#    {{ form.submit_btn() }}#}
+{#</form>#}
+{#</body>#}
+{#</html>#}
+
+{% extends 'bootstrap/base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}
+    ВХОД В БАЗУ ДАННЫХ
+{% endblock %}
+
+{% block body %}
+    <div class="container" style="padding-top: 300px; align-self: center; align-content: center">
+        <h2 style="text-align: center">ДОБРО ПОЖАЛОВАТЬ В БД</h2>
+        <p style="text-align: center">Пожалуйста авторизуйтесь</p>
+    </div>
+    <div class="container" style="max-width: 300px; align-self: center; background-color: aquamarine">
+        {{ wtf.quick_form(form) }}
+    </div>
+{% endblock %}

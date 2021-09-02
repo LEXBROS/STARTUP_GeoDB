@@ -1,3 +1,4 @@
+from flask_bootstrap import Bootstrap
 from flask import Flask, render_template, url_for
 from config import Config
 from laboratory_database import LaboratoryDatabase
@@ -7,6 +8,7 @@ from forms import LoginForm
 
 app = Flask(__name__)
 app.config.from_object(Config)
+bootstrap = Bootstrap(app)
 laboratory_db = LaboratoryDatabase()
 users_db = AppUsersDatabase()
 
