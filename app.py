@@ -1,12 +1,12 @@
 from flask_bootstrap import Bootstrap
-from flask import Flask, render_template, url_for, request, session, redirect
+from flask import Flask, render_template, url_for, redirect
 from config import Config
 from laboratory_database import LaboratoryDatabase
 from app_users_database import AppUsersDatabase
 from dict_terminology import COLS_INGGEO, ORDERS, COLS_CONSTRUCTION_SAND, COLS_QUARTZ_SAND
 from forms import LoginForm, RegisterForm
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import LoginManager, login_user
+from flask_login import LoginManager, login_user, logout_user, login_required
 from userlogin import UserLogin
 
 app = Flask(__name__)
@@ -27,8 +27,8 @@ def load_user(user_id):
 def register():
     form = RegisterForm()
     if form.validate_on_submit():
-        hash = generate_password_hash(form.password.data)
-        res = users_db.adduser(form.email.data, hash, form.first_name.data, form.last_name.data)
+        psw_hash = generate_password_hash(form.password.data)
+        res = users_db.adduser(form.email.data, psw_hash, form.first_name.data, form.last_name.data)
         if res:
             print('Успешная регистрация')
             return redirect(url_for('login'))
@@ -42,28 +42,37 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = users_db.getUserByEmail(form.email.data)
-        print(user)
         if user and check_password_hash(user['password'], form.password.data):
             userlogin = UserLogin().create(user)
             rm = form.remember.data
             login_user(userlogin, remember=rm)
-            return redirect(request.args.get("next") or url_for("index"))
+            return redirect(url_for("index"))
 
     return render_template("login.html", form=form)
 
 
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
+
+
 @app.route('/')
 @app.route('/index')  # Главная страница
+@login_required
 def index():
     return render_template('index.html')
 
 
 @app.route('/new_order')  # Добавление нового объекта
+@login_required
 def new_order():
     return render_template('new_order.html')
 
 
 @app.route('/change_obj')  # Выбор текущего объекта для работы
+@login_required
 def change_order():
     orders = []
     for row in laboratory_db.get_all_orders():
@@ -72,6 +81,7 @@ def change_order():
 
 
 @app.route('/all_order_probes/<int:order_id>')
+@login_required
 def all_order_probes(order_id):
     ing_probes = []
     construction_sands = []
