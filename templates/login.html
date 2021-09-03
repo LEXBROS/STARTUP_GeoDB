@@ -27,7 +27,8 @@
         <h2 style="text-align: center">ДОБРО ПОЖАЛОВАТЬ В БД</h2>
         <p style="text-align: center">Пожалуйста авторизуйтесь</p>
     </div>
-    <div class="container" style="max-width: 300px; align-self: center; background-color: aquamarine">
+    <div class="container" style="max-width: 400px; align-self: center; background-color: aquamarine">
         {{ wtf.quick_form(form) }}
+        <p><a href="{{ url_for('register') }}">Регистрация</a>
     </div>
 {% endblock %}

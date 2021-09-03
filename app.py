@@ -1,22 +1,55 @@
 from flask_bootstrap import Bootstrap
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, request, session, redirect
 from config import Config
 from laboratory_database import LaboratoryDatabase
 from app_users_database import AppUsersDatabase
 from dict_terminology import COLS_INGGEO, ORDERS, COLS_CONSTRUCTION_SAND, COLS_QUARTZ_SAND
-from forms import LoginForm
+from forms import LoginForm, RegisterForm
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import LoginManager, login_user
+from userlogin import UserLogin
 
 app = Flask(__name__)
 app.config.from_object(Config)
+login_manager = LoginManager(app)
 bootstrap = Bootstrap(app)
 laboratory_db = LaboratoryDatabase()
 users_db = AppUsersDatabase()
 
 
+@login_manager.user_loader
+def load_user(user_id):
+    print("load_user")
+    return UserLogin().from_db(user_id, users_db)
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    form = RegisterForm()
+    if form.validate_on_submit():
+        hash = generate_password_hash(form.password.data)
+        res = users_db.adduser(form.email.data, hash, form.first_name.data, form.last_name.data)
+        if res:
+            print('Успешная регистрация')
+            return redirect(url_for('login'))
+        else:
+            print('Че-то не то с регистрацией')
+    return render_template("register.html", form=form)
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
-    return render_template('login.html', form=form)
+    if form.validate_on_submit():
+        user = users_db.getUserByEmail(form.email.data)
+        print(user)
+        if user and check_password_hash(user['password'], form.password.data):
+            userlogin = UserLogin().create(user)
+            rm = form.remember.data
+            login_user(userlogin, remember=rm)
+            return redirect(request.args.get("next") or url_for("index"))
+
+    return render_template("login.html", form=form)
 
 
 @app.route('/')

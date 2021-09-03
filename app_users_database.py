@@ -25,3 +25,50 @@ class AppUsersDatabase:
             cur = connection.cursor()
             cur.execute(read_sql())
             connection.commit()
+
+    def adduser(self, email, hashpsw, first_name, last_name):
+        try:
+            with psycopg2.connect(database=self._db,
+                                  user=self._user,
+                                  password=self._password,
+                                  host=self._host,
+                                  port=self._port) as connection:
+                cur = connection.cursor()
+                cur.execute("""INSERT INTO app_users.public.users (email, password, first_name, last_name)
+                            VALUES (%s, %s, %s, %s)""", (email, hashpsw, first_name, last_name))
+            return True
+        except psycopg2.OperationalError:
+            return False
+
+    def getuser(self, user_id):
+        try:
+            with psycopg2.connect(database=self._db,
+                                  user=self._user,
+                                  password=self._password,
+                                  host=self._host,
+                                  port=self._port) as connection:
+                cur = connection.cursor()
+                cur.execute("""SELECT * FROM app_users.public.users WHERE id = %s""", (user_id,))
+                res = cur.fetchone()
+                if not res:
+                    print('Пльзователь не найден')
+                    return False
+        except psycopg2.OperationalError as e:
+            print("Ошибка получения данных из БД " + str(e))
+        return False
+
+    def getUserByEmail(self, user_email):
+        try:
+            with psycopg2.connect(database=self._db,
+                                  user=self._user,
+                                  password=self._password,
+                                  host=self._host,
+                                  port=self._port) as connection:
+                cur = connection.cursor()
+                cur.execute("""SELECT * FROM app_users.public.users WHERE email = %s""", (user_email,))
+                res = cur.fetchone()
+                user_ = dict(zip(['id', 'email', 'password', 'first_name', 'last_name'], res))
+                return user_
+        except psycopg2.OperationalError as e:
+            print("Ошибка получения данных из БД " + str(e))
+        return False

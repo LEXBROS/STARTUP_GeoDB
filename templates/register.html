@@ -1,0 +1,16 @@
+{% extends 'bootstrap/base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}
+    РЕГИСТРАЦИЯ
+{% endblock %}
+
+{% block body %}
+    <div class="container" style="padding-top: 300px; align-self: center; align-content: center">
+        <h2 style="text-align: center">РЕГИСТРАЦИЯ</h2>
+        <p style="text-align: center">Пожалуйста заполните все поля ниже</p>
+    </div>
+    <div class="container" style="max-width: 400px; align-self: center; background-color: aquamarine">
+        {{ wtf.quick_form(form) }}
+    </div>
+{% endblock %}
