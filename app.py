@@ -37,6 +37,7 @@ def register():
     return render_template("register.html", form=form)
 
 
+@app.route('/', methods=['GET', 'POST'])
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
@@ -58,7 +59,6 @@ def logout():
     return redirect(url_for('login'))
 
 
-@app.route('/')
 @app.route('/index')  # Главная страница
 @login_required
 def index():
